@@ -3,53 +3,65 @@ from modules import simulator, quiz, chatbot
 
 st.set_page_config(page_title="FinBuddy Virtual Advisor", layout="centered", page_icon="🐧")
 st.title("🐧 FinBuddy Virtual Advisor 🐧")
+
 st.markdown(
-        """
-        <style>
-        .stApp {
-            background-color: #E3F2FD;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
-# Sidebar: ID Pengguna
-with st.sidebar:
-    st.markdown("## 👤 Identitas Pengguna")
-    user_id = st.text_input("Masukkan Nama atau ID Kamu", key="user_id", placeholder="contoh: defika123")
-    if not user_id:
-        st.warning("Harap isi ID pengguna untuk menggunakan aplikasi.")
-        st.stop()
-
-# Inisialisasi data per user
-if user_id not in st.session_state:
-    st.session_state[user_id] = {
-        "quiz_score": 0,
-        "quiz_answers": {},
-        "simulator_result": {},
-        "chat_history": []
+    """
+    <style>
+    .stApp {
+        background-color: #E3F2FD;
     }
-
-# Sidebar: Navigasi fitur
-menu = st.sidebar.selectbox(
-    "Pilih Fitur",
-    ["🏠 Home", "📊 Simulasi Kredit Mobil", "🧠 Cek Kesiapan Finansial", "💬 Tanya Chatbot"]
+    </style>
+    """,
+    unsafe_allow_html=True
 )
 
+# Sidebar: User Identification
+with st.sidebar:
+    st.markdown("## 👤 User Identification")
+    user_id = st.text_input("Enter Your Name or ID", key="user_id", placeholder="e.g. defika123")
+
+    # Sidebar: Feature Navigation (always visible)
+    st.markdown("## 🔍 Navigate Features")
+    menu = st.radio(
+        "Select Feature",
+        ["🏠 Home", "🧠 Financial Readiness Quiz", "📊 Car Loan Simulator", "💬 Ask the Chatbot"]
+    )
+
+# Set display name
+display_name = user_id if user_id else "Guest"
+
+# Routing based on menu selection
 if menu == "🏠 Home":
-    st.subheader(f"Halo, {user_id} 👋")
+    st.subheader(f"Hi, {display_name} 👋")
     st.markdown("""
-    Aplikasi ini membantumu mengambil keputusan kredit mobil yang lebih bijak.
-    
-    **Fitur yang tersedia:**
-    - 📊 Simulasi cicilan kredit mobil
-    - 🧠 Kuis kesiapan finansial
-    - 💬 Chatbot keuangan pribadi
+    **Welcome to FinBuddy!** 🐧  
+    FinBuddy is your virtual financial assistant — here to help you make smarter car loan decisions.
+
+    With FinBuddy, you can:
+    - 🧠 Take a quiz to assess your financial readiness
+    - 📊 Simulate monthly car loan installments
+    - 💬 Chat with a smart finance assistant
+
+    Just select a feature from the sidebar to get started!
     """)
-elif menu == "📊 Simulasi Kredit Mobil":
-    simulator.run(user_id)
-elif menu == "🧠 Cek Kesiapan Finansial":
-    quiz.run(user_id)
-elif menu == "💬 Tanya Chatbot":
-    chatbot.run(user_id)
+else:
+    if not user_id:
+        st.warning("Please enter your ID in the sidebar to use this feature.")
+        st.stop()
+
+    # Initialize per-user data if not already set
+    if user_id not in st.session_state:
+        st.session_state[user_id] = {
+            "quiz_score": 0,
+            "quiz_answers": {},
+            "simulator_result": {},
+            "chat_history": []
+        }
+
+    # Run selected module
+    if menu == "📊 Car Loan Simulator":
+        simulator.run(user_id)
+    elif menu == "🧠 Financial Readiness Quiz":
+        quiz.run(user_id)
+    elif menu == "💬 Ask the Chatbot":
+        chatbot.run(user_id)

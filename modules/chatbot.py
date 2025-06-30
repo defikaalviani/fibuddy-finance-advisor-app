@@ -4,8 +4,8 @@ import streamlit as st
 import requests
 import json
 
-#OPENROUTER_API_KEY="your api key here"
-OPENROUTER_API_KEY=st.secrets["OPENROUTER_API_KEY"]
+#OPENROUTER_API_KEY=st.secrets["OPENROUTER_API_KEY"] #or replace with 
+OPENROUTER_API_KEY="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"
 MODEL = "mistralai/mistral-7b-instruct"
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
 

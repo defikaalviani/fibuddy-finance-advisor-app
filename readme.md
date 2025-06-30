@@ -28,13 +28,13 @@ It was created in response to the increasing number of people taking out auto lo
 
 1. **Clone the repository**
     ```bash
-    git clone https://github.com/your-username/finbuddy.git
+    git clone https://github.com/defikaalviani/fibuddy-finance-advisor-app.git
     cd finbuddy
     ```
 2. **Create virtual environment & install dependencies**
     ```bash
     python -m venv venv
-    source venv/bin/activate        # On Windows: venv\\Scripts\\activate
+    source venv/bin/activate        # On Windows: venv\Scripts\activate
     pip install -r requirements.txt
     ```
 3. **(Optional) Create a .env file with your API key**
